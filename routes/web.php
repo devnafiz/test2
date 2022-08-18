@@ -27,6 +27,8 @@ Route::get('/welcome', function() {
     Codewolfy::welcome();
 });
 Route::get('/test',[ArticleController::class,'test']);
+Route::get('/test2',[ArticleController::class,'test2']);
+
 
 //dd(app()->make('Game'));
 
