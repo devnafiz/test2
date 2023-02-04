@@ -6,9 +6,13 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Database\Seeders\Traits\TruncateTable;
+use Illuminate\Support\Facades\DB;
+
 
 class UsersTableSeeder extends Seeder
 {
+    use TruncateTable;
     /**
      * Run the database seeds.
      *
@@ -16,31 +20,11 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        User::truncate();
+         DB::statement('SET FOREIGN_KEY_CHECKS=0');  
+        $this->truncate('users');
+          \App\Models\User::factory(10)->create();
 
-        $faker=\Faker\Factory::create();
-
-        $password =Hash::make('toptal');
-
-        User::create([
-            'name'=>'Administrator',
-            'email'=>'admin@test.com',
-            'password'=> $password
-
-
-        ]);
-
-        for ($i=0; $i < 50; $i++) { 
-
-
-        	User::create([
-
-                'name'=>$faker->name,
-                'email'=>$faker->email,
-                'password'=>$password,
-        	]);
-        	
-        }
+         DB::statement('SET FOREIGN_KEY_CHECKS=1'); 
 
 
     }
