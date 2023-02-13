@@ -8,11 +8,12 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Database\Seeders\Traits\TruncateTable;
 use Illuminate\Support\Facades\DB;
-
+use Database\Seeders\Traits\DisableForeignKey;
 
 class UsersTableSeeder extends Seeder
 {
     use TruncateTable;
+    use DisableForeignKey;
     /**
      * Run the database seeds.
      *
@@ -20,11 +21,12 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-         DB::statement('SET FOREIGN_KEY_CHECKS=0');  
+        $this->disableforeignkey();
         $this->truncate('users');
           \App\Models\User::factory(10)->create();
+        $this->enableforeignkey();  
 
-         DB::statement('SET FOREIGN_KEY_CHECKS=1'); 
+       
 
 
     }
